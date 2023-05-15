@@ -1,0 +1,11 @@
+canvas {
+    background-color: blue;
+    display: block;
+    /*position: absolute;*/
+    margin: auto;
+}
+
+button{
+    display: block;
+    margin: auto;
+}
