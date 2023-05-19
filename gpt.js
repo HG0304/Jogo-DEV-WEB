@@ -7,3 +7,4 @@ function incrementSeconds() {
 }
 
 var cancel = setInterval(incrementSeconds, 1000);
+
