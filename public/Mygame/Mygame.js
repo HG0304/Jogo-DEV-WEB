@@ -109,19 +109,23 @@ function moveBala() {
     for (var i = 0; i < bullets.length; i++) {
         var bullet = bullets[i];
 
-        if (bullet.x < canvas.width && bullet.y < canvas.height) { // se estiver dentro do canvas
+        if (bullet.x >= 0 && bullet.x <= c.width && bullet.y >= 0 && bullet.y <= c.height) { // se estiver dentro do canvas
             bullet.x += bullet.targetX;
             bullet.y += bullet.targetY;
-        }
+          } else {
+            // Remove a bala se estiver fora do canvas
+            bullets.splice(i, 1);
+            i--;
+          }
     }
 };
-// uhuuuuuu
+
 // cria a anima  as balas
 function desenharBala() {
-    criarBala();
+    
     moveBala();
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    //ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     for (var i = 0; i < bullets.length; i++) {
         var bullet = bullets[i];
@@ -146,8 +150,8 @@ function contadorSegundos() {
 }
 
 setInterval(contadorSegundos, 1000);
-setInterval(desenharBala, 1000)
 
 
+setInterval(criarBala, 500)
 desenharPlayer();
 desenharBala();
