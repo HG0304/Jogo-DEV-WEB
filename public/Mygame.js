@@ -118,10 +118,11 @@ function moveBala() {
 // cria a anima  as balas
 function desenharBala() {
     
-    ctx.clearRect(0,0,canvas.width, canvas.height);
+
 
     criarBala();
     moveBala();
+    ctx.clearRect(0,0,canvas.width, canvas.height);
     
     ctx.beginPath();
     ctx.arc(bullet.x, bullet.y, 5, 0, Math.PI * 2);
@@ -131,6 +132,23 @@ function desenharBala() {
     
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Função para atualizar o cronômetro
 var segundos = 0;
