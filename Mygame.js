@@ -55,11 +55,64 @@ function movePlayer(){
 }
 
 function moveBala(){
+    
+    // Gera um número aleatório entre 0 e 3
+    var lado = Math.floor(Math.random() * 4);
 
+    // Posição e velocidade iniciais
+    var x, y, dx, dy;
+    var speed = 2;
+    
+    
+        if  (lado == 0){ // Topo do mapa
+            x = Math.random() * canvas.width;
+            y = 0;
+            dx = 0;
+            dy = speed;
+            break;
+        }
+        else if  (lado == 1){ // Lateral direita do mapa
+            x = canvas.width;
+            y = Math.random() * canvas.height;
+            dx = -speed;
+            dy = 0;
+            break;
+        }
+        else if  (lado == 2){ // Base do mapa
+            x = Math.random() * canvas.width;
+            y = canvas.height;
+            dx = 0;
+            dy = -speed;
+            break;
+        }    
+        else if  (lado == 3){ // Lateral esquerda do mapa
+            x = 0;
+            y = Math.random() * canvas.height;
+            dx = speed;
+            dy = 0;
+            
+            break;
+        
+        }
 }
 
 // desenhar e animar o jogador
-function desenharBalas() {
+
+function desenharPlayer() {
+    
+    ctx.clearRect(0,0,canvas.width, canvas.height);
+
+    moveBala()
+    
+    ctx.fillStyle = player.cor;
+    ctx.fillRect(Bala.x, Bala.y, Bala.largura, Bala.altura);
+    ctx.fill()
+    
+    requestAnimationFrame(desenharBalas)
+}
+
+
+function desenharPlayer() {
     
     ctx.clearRect(0,0,canvas.width, canvas.height);
 
@@ -69,10 +122,10 @@ function desenharBalas() {
     ctx.fillRect(player.x, player.y, player.largura, player.altura);
     ctx.fill()
     
-    requestAnimationFrame(desenharBalas)
+    requestAnimationFrame(desenharPlayer)
 }
 
-desenharBalas()
+desenharPlayer()
 
 ////////////////////////////////////////////////////////////////
 
