@@ -81,8 +81,9 @@ function criarBala() {
     var dx = player.x - x;
     var dy = player.y - y;
     var distance = Math.sqrt(dx * dx + dy * dy);
-    bullet.targetX = (dx / distance) * bullet.speed;
-    bullet.targetY = (dy / distance) * bullet.speed;
+    bullet.targetX = (player.x - bullet.x) / distance * bullet.speed;
+    bullet.targetY = (player.y - bullet.y) / distance * bullet.speed;
+    
 
     // Adiciona a bala à lista das balas
     bullets.push(bullet);
@@ -106,7 +107,7 @@ function desenharPlayer() {
 // move as balas em direçao ao jogador
 function moveBala() {
     for (var i = 0; i < bullets.length; i++) {
-        bullet = bullets[i];
+        var bullet = bullets[i];
 
         if (bullet.x < canvas.width && bullet.y < canvas.height) { // se estiver dentro do canvas
             bullet.x += bullet.targetX;
@@ -117,9 +118,6 @@ function moveBala() {
 
 // cria a anima  as balas
 function desenharBala() {
-    
-    ctx.clearRect(0,0,canvas.width, canvas.height);
-
     criarBala();
     moveBala();
     
@@ -129,7 +127,25 @@ function desenharBala() {
     ctx.fill()
     ctx.closePath();
     
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Função para atualizar o cronômetro
 var segundos = 0;
@@ -144,7 +160,10 @@ setInterval(contadorSegundos, 1000);
 
 setInterval(cronometro, 1000);
 setInterval(desenharBala, 1000)
+
+
 desenharPlayer();
+desenharBala();
 
 
 
