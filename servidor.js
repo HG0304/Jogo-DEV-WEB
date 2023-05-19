@@ -12,5 +12,5 @@ app.listen(port, () => {
 
 // define project.html como a pagina principal do servidor
 app.get('/', (req, res) => {
-    res.redirect('mygame/mygame.html');
+    res.redirect('mygame/Menu.html');
   });

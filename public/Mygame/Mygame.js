@@ -14,7 +14,7 @@ var player = {
     y: canvas.height/2,
     altura: 30,
     largura: 60,
-    cor: '#5A5A5A',
+    cor: '#4e87c9',
     speed: 9,
 }
 
