@@ -115,7 +115,7 @@ function moveBala() {
         }
     }
 };
-
+// uhuuuuuu
 // cria a anima  as balas
 function desenharBala() {
     criarBala();
@@ -142,17 +142,6 @@ function desenharBala() {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 // Função para atualizar o cronômetro
 var segundos = 0;
 var tempo = document.getElementById('cronometro');
@@ -169,6 +158,7 @@ setInterval(desenharBala, 1000)
 
 
 desenharPlayer();
+
 desenharBala();
 
 
