@@ -4,18 +4,6 @@ let ctx = c.getContext("2d");
 
 teclas = {};
 
-// obj balas ======> gerar randomicamente e aumentar a vel com o tempo
-var Bala = {
-    x: 100,
-    y: 100,
-    raio: 10,
-    cor: "black",
-    speed: 15,
-    dirX: -1,
-    dirY: 1,
-    mod: 0
-}
-
 // definicoes do player
 var player = {
     x: canvas.width/2,
@@ -54,50 +42,40 @@ function movePlayer(){
         player.x += player.speed;
 }
 
-
-// Variáveis globais para a posição da bala
-var XBala, YBala;
-
-function moveBala(){
-    
+// Função para criar as coordenadas das balas nas extremidades
+function criarBala() {
     // Gera um número aleatório entre 0 e 3
     var lado = Math.floor(Math.random() * 4);
 
-    // Posição e velocidade iniciais
-    var x, y, XBala, YBala;
-    var speed = 2;
-    
-    
-        if  (lado == 0){ // Topo do mapa
-            x = Math.random() * canvas.width;
-            y = 0;
-            XBala = x;
-            YBala = y + speed;
-            
-        }
-        else if  (lado == 1){ // Lateral direita do mapa
-            x = canvas.width;
-            y = Math.random() * canvas.height;
-            XBala = x-speed;
-            YBala = y;
-            
-        }
-        else if  (lado == 2){ // Base do mapa
-            x = Math.random() * canvas.width;
-            y = canvas.height;
-            XBala = x;
-            YBala =y -speed;
-            
-        }    
-        else if  (lado == 3){ // Lateral esquerda do mapa
-            x = 0;
-            y = Math.random() * canvas.height;
-            XBala = x + speed;
-            YBala = y;
-            
-            
-        
-        }
+    // Posição inicial nas extremidades
+    var x, y;
+    if (lado === 0) { // Topo do mapa
+        x = Math.random() * canvas.width;
+        y = 0;
+    } else if (lado === 1) { // Lateral direita do mapa
+        x = canvas.width;
+        y = Math.random() * canvas.height;
+    } else if (lado === 2) { // Base do mapa
+        x = Math.random() * canvas.width;
+        y = canvas.height;
+    } else { // Lateral esquerda do mapa
+        x = 0;
+        y = Math.random() * canvas.height;
+    }
+
+    // obj balas ======> gerar randomicamente e aumentar a vel com o tempo
+    var bullet = {
+        x: x,
+        y: y,
+        raio: 10,
+        cor: "black",
+        speed: 15,
+        targetX: player.x, // Posição X do jogador
+        targetY: player.y // Posição Y do jogador
+}
+
+    // Adiciona a bala ao array
+    bullets.push(bullet);
 }
 
 // desenhar e animar o jogador
@@ -115,7 +93,7 @@ function desenharPlayer() {
     requestAnimationFrame(desenharPlayer)
 }
 
-
+// cria a anima  as balas
 function desenharBala() {
     
     ctx.clearRect(0,0,canvas.width, canvas.height);
