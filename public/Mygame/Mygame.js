@@ -146,9 +146,10 @@ function contadorSegundos() {
 setInterval(contadorSegundos, 1000);
 
 
+setInterval(criarBala, 500)
+
 
 desenharPlayer();
-
 desenharBala();
 
 

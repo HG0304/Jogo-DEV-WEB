@@ -1,6 +1,0 @@
-paredes pelo mapa com colisao
-
-falta -
-
-mudar a fase
-limitar  o movimento para dentro da tela apenas
