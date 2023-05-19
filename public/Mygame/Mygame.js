@@ -156,10 +156,9 @@ setInterval(contadorSegundos, 1000);
 setInterval(cronometro, 1000);
 setInterval(desenharBala, 1000)
 
+desenharBala();
 
 desenharPlayer();
-
-desenharBala();
 
 
 
