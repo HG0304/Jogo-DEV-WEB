@@ -16,6 +16,9 @@ var bullet = {
     mod: 0
 }
 
+// criar o array para armazenar as balas
+var bullets = {}
+
 // definicoes do player
 var player = {
     x: canvas.width/2,
@@ -37,6 +40,34 @@ document.addEventListener("keyup", function (evento){
     delete teclas[evento.keyCode];
     console.log(teclas);
 });
+
+// Função para criar balas nas extremidades
+function criarBala() {
+    // Gera um número aleatório entre 0 e 3
+    var lado = Math.floor(Math.random() * 4);
+
+    // Posição inicial nas extremidades
+    var x, y;
+    if (lado === 0) { // Topo do mapa
+        x = Math.random() * canvas.width;
+        y = 0;
+    } else if (lado === 1) { // Lateral direita do mapa
+        x = canvas.width;
+        y = Math.random() * canvas.height;
+    } else if (lado === 2) { // Base do mapa
+        x = Math.random() * canvas.width;
+        y = canvas.height;
+    } else { // Lateral esquerda do mapa
+        x = 0;
+        y = Math.random() * canvas.height;
+    }
+
+    bullet.x = x
+    bullet.y = y
+
+    // Adiciona a bala ao array
+    bullets.push(bullet);
+}
 
 // funcao para mover o jogador
 function movePlayer(){
