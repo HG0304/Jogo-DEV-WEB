@@ -1,12 +1,14 @@
 /** @type {HTMLCanvasElement} */
-let c = document.getElementById("canvas");
-let ctx = c.getContext("2d");
+let canvas = document.getElementById("canvas");
+let ctx = canvas.getContext("2d");
 
+// armazena as teclas pressionadas
 teclas = {};
 
+// armazena as balas
 bullets = [];
 
-// definicoes do player
+// definicoes do player como objeto
 var player = {
     x: canvas.width/2,
     y: canvas.height/2,
@@ -16,15 +18,13 @@ var player = {
     speed: 9,
 }
 
-// captura as teclas do teclado apenas quando pressionadas
+// captura as teclas do teclado
 document.addEventListener("keydown", function (evento){
     teclas[evento.keyCode] = true;
-    console.log(teclas);
 });
-
+// remove as teclas quando deixam de ser pressionadas
 document.addEventListener("keyup", function (evento){
     delete teclas[evento.keyCode];
-    console.log(teclas);
 });
 
 // funcao para mover o jogador
@@ -33,13 +33,13 @@ function movePlayer(){
     if(87 in teclas && player.y > 0)
         player.y -= player.speed;
     //s - 83 => desce
-    if(83 in teclas && player.y < canvas.height)
+    if(83 in teclas && player.y < canvas.height - player.altura)
         player.y += player.speed;
     //a - 65 => esq
     if(65 in teclas && player.x > 0)
         player.x -= player.speed;
     //d - 68 => dir
-    if(68 in teclas && player.y < canvas.width)
+    if(68 in teclas && player.x < canvas.width - player.largura)
         player.x += player.speed;
 };
 
@@ -73,13 +73,16 @@ function criarBala() {
         raio: 10,
         cor: "red",
         speed: 15,
-        targetX: player.x - x + 15, // Posição X do jogador
-        targetY: player.y - y + 30 // Posição Y do jogador
+        targetX: 0,
+        targetY: 0
     };
 
+    // calculo da distancia da bola ate o player
     var dx = player.x - x;
     var dy = player.y - y;
     var distance = Math.sqrt(dx * dx + dy * dy);
+
+    // para que a bola tenha a mesmo velocidade, intependente do angulo que houver entre a bola e o player
     bullet.targetX = (player.x - bullet.x) / distance * bullet.speed;
     bullet.targetY = (player.y - bullet.y) / distance * bullet.speed;
     
@@ -106,11 +109,23 @@ function moveBala() {
     for (var i = 0; i < bullets.length; i++) {
         var bullet = bullets[i];
 
-        if (bullet.x >= 0 && bullet.x <= c.width && bullet.y >= 0 && bullet.y <= c.height) { // dentro do canvas
+        if (bullet.x >= 0 && bullet.x <= canvas.width && bullet.y >= 0 && bullet.y <= canvas.height) { // dentro do canvas
             bullet.x += bullet.targetX;
             bullet.y += bullet.targetY;
+
+            // Verificar colisão com o jogador
+            if (
+                bullet.x < player.x + player.largura &&
+                bullet.x + bullet.raio > player.x &&
+                bullet.y < player.y + player.altura &&
+                bullet.y + bullet.raio > player.y
+            ) {
+                // Colisão detectada, encerrar o jogo
+                console.log("Game Over");
+
+            }
           } else {
-            // Remove a bala se estiver fora do canvas
+            // Remove a bala se estiver fora do canvas, caso contrario, muitas bolas sao geradas e programa fica extremamente lento e travado
             bullets.splice(i, 1);
             i--;
           }
@@ -150,4 +165,4 @@ setInterval(criarBala, 500)
 
 
 desenharPlayer();
-desenharBala()
+desenharBala();
