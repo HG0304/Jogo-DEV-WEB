@@ -10,7 +10,8 @@ canvas{
     margin-right: auto;
     display: block;
 }
-<<<<<<< HEAD
-=======
 
->>>>>>> 03374a15013f198527bbb17832d379b20d877418
+#cronometro{
+    color: white;
+    display: inline;
+}

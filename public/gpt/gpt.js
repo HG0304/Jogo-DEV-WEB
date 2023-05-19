@@ -3,17 +3,14 @@
 var canvas = document.getElementById("gameCanvas");
 var ctx = canvas.getContext("2d");
 
-console.log('oi')
-
 // Variáveis para representar o jogador
 var player = {
-    x: canvas.width / 2 - 10, // Posição inicial do jogador no meio do canvas
-    y: canvas.height / 2 - 10,
-    width: 20,
-    height: 20,
+    x: canvas.width / 2, // Posição inicial do jogador no centro do canvas
+    y: canvas.height / 2,
+    width: 100,
+    height: 100,
     speed: 5 // Velocidade de movimento do jogador
 };
-
 
 // Array para armazenar as balas
 var bullets = [];
@@ -90,10 +87,13 @@ function updateBullets() {
 
 // Função para desenhar o jogador
 function drawPlayer() {
+    
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
     ctx.fillStyle = "blue";
     ctx.fillRect(player.x, player.y, player.width, player.height);
+    ctx.fill();
 }
-
 
 // Função para desenhar as balas
 function drawBullets() {
@@ -110,37 +110,18 @@ function drawBullets() {
     }
 }
 
-
-// Variável para controlar o tempo decorrido
-var elapsedTime = 0;
-
-// Função para atualizar o tempo decorrido
-function updateElapsedTime(deltaTime) {
-    elapsedTime += deltaTime;
-}
-
-// Função para criar balas nas extremidades
-function createBullet() {
-    // ...
+// Função para atualizar o cronômetro
+function updateTimer(seconds) {
+    var timer = document.getElementById("timer");
+    timer.innerText = "Tempo de jogo: " + seconds + "s";
 }
 
 // Função principal do jogo
-function gameLoop(timestamp) {
-    var deltaTime = timestamp - lastTimestamp;
-    lastTimestamp = timestamp;
-
+function gameLoop() {
     updatePlayer();
     updateBullets();
     drawPlayer();
     drawBullets();
-    
-    updateElapsedTime(deltaTime);
-
-    // Atualiza o intervalo de criação de balas a cada 10 segundos
-    if (elapsedTime >= 10000) {
-        createBullet();
-        elapsedTime = 0;
-    }
 
     requestAnimationFrame(gameLoop);
 }
@@ -188,8 +169,23 @@ window.addEventListener("keyup", function (event) {
     }
 });
 
+// Variáveis para controlar o tempo de jogo
+var startTime = new Date().getTime();
+var currentTime = 0;
+var elapsedTime = 0;
+
+// Função para atualizar o tempo de jogo
+function updateGameTime() {
+    currentTime = new Date().getTime();
+    elapsedTime = Math.floor((currentTime - startTime) / 1000);
+    updateTimer(elapsedTime);
+}
+
 // Inicia o jogo
 window.addEventListener("load", function () {
-    gameLoop();
     setInterval(createBullet, 2000); // Cria uma nova bala a cada 2 segundos
+
+    setInterval(updateGameTime, 1000); // Atualiza o tempo de jogo a cada segundo
+
+    gameLoop();
 });
