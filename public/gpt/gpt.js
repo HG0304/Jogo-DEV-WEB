@@ -1,34 +1,62 @@
-// Obtém o elemento canvas
 /** @type {HTMLCanvasElement} */
-var canvas = document.getElementById("gameCanvas");
-var ctx = canvas.getContext("2d");
+let canvas = document.getElementById("canvas");
+let ctx = canvas.getContext("2d");
 
-// Variáveis para representar o jogador
-var player = {
-    x: canvas.width / 2, // Posição inicial do jogador no centro do canvas
+let teclas = {};
+
+let bullets = [];
+
+// Definições do jogador
+let player = {
+    x: canvas.width / 2,
     y: canvas.height / 2,
-    width: 100,
-    height: 100,
-    speed: 5 // Velocidade de movimento do jogador
+    altura: 25,
+    largura: 60,
+    cor: '#5A5A5A',
+    speed: 9,
+    score: 0
 };
 
-// Array para armazenar as balas
-var bullets = [];
+// Captura as teclas do teclado apenas quando pressionadas
+document.addEventListener("keydown", function (evento) {
+    teclas[evento.keyCode] = true;
+});
 
-// Função para criar balas nas extremidades
-function createBullet() {
+document.addEventListener("keyup", function (evento) {
+    delete teclas[evento.keyCode];
+});
+
+// Função para mover o jogador
+function movePlayer() {
+    // W - 87 => sobe
+    if (87 in teclas && player.y > 0)
+        player.y -= player.speed;
+    // S - 83 => desce
+    if (83 in teclas && player.y < canvas.height)
+        player.y += player.speed;
+    // A - 65 => esq
+    if (65 in teclas && player.x > 0)
+        player.x -= player.speed;
+    // D - 68 => dir
+    if (68 in teclas && player.x < canvas.width)
+        player.x += player.speed;
+}
+
+// Função para criar balas nas extremidades aleatoriamente
+function criarBala() {
     // Gera um número aleatório entre 0 e 3
-    var side = Math.floor(Math.random() * 4);
+    let lado = Math.floor(Math.random() * 4);
 
     // Posição inicial nas extremidades
-    var x, y;
-    if (side === 0) { // Topo do mapa
+    let x, y;
+
+    if (lado === 0) { // Topo do mapa
         x = Math.random() * canvas.width;
         y = 0;
-    } else if (side === 1) { // Lateral direita do mapa
+    } else if (lado === 1) { // Lateral direita do mapa
         x = canvas.width;
         y = Math.random() * canvas.height;
-    } else if (side === 2) { // Base do mapa
+    } else if (lado === 2) { // Base do mapa
         x = Math.random() * canvas.width;
         y = canvas.height;
     } else { // Lateral esquerda do mapa
@@ -36,156 +64,79 @@ function createBullet() {
         y = Math.random() * canvas.height;
     }
 
+    // Calcula as velocidades em direção ao jogador
+    let dx = player.x - x;
+    let dy = player.y - y;
+    let distance = Math.sqrt(dx * dx + dy * dy);
+    let speed = 3; // Velocidade das balas
+    let targetX = (dx / distance) * speed;
+    let targetY = (dy / distance) * speed;
+
     // Cria um objeto para representar a bala
-    var bullet = {
+    let bullet = {
         x: x,
         y: y,
-        speed: 2, // Velocidade da bala
-        dx: 0, // Velocidade horizontal para mirar no jogador
-        dy: 0 // Velocidade vertical para mirar no jogador
+        raio: 10,
+        cor: "black",
+        speed: speed,
+        targetX: targetX,
+        targetY: targetY
     };
-
-    // Calcular as velocidades de mira
-    var dx = player.x - x;
-    var dy = player.y - y;
-    var distance = Math.sqrt(dx * dx + dy * dy);
-    bullet.dx = (dx / distance) * bullet.speed;
-    bullet.dy = (dy / distance) * bullet.speed;
 
     // Adiciona a bala ao array
     bullets.push(bullet);
 }
 
-// Função para atualizar a posição do jogador
-function updatePlayer() {
-    if (keys.w && player.y > 0) {
-        player.y -= player.speed;
-    }
-    if (keys.a && player.x > 0) {
-        player.x -= player.speed;
-    }
-    if (keys.s && player.y + player.height < canvas.height) {
-        player.y += player.speed;
-    }
-    if (keys.d && player.x + player.width < canvas.width) {
-        player.x += player.speed;
-    }
-}
-
-// Função para atualizar a posição das balas
-function updateBullets() {
-    for (var i = 0; i < bullets.length; i++) {
-        var bullet = bullets[i];
-
-        // Movimento em linha reta
-        if (bullet.x < canvas.width && bullet.y < canvas.height) {
-            bullet.x += bullet.dx;
-            bullet.y += bullet.dy;
-        }
-    }
-}
-
-// Função para desenhar o jogador
-function drawPlayer() {
-    
+// Desenha o jogador
+function desenharPlayer() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    ctx.fillStyle = "blue";
-    ctx.fillRect(player.x, player.y, player.width, player.height);
-    ctx.fill();
+    movePlayer();
+
+    ctx.fillStyle = player.cor;
+    ctx.fillRect(player.x, player.y, player.largura, player.altura);
+
+    requestAnimationFrame(desenharPlayer);
 }
 
-// Função para desenhar as balas
-function drawBullets() {
+// Move as balas em direção ao jogador
+function moveBala() {
+    for (let i = 0; i < bullets.length; i++) {
+        let bullet = bullets[i];
+
+        bullet.x += bullet.targetX;
+        bullet.y += bullet.targetY;
+    }
+}
+
+// Desenha as balas
+function desenharBala() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    for (var i = 0; i < bullets.length; i++) {
-        var bullet = bullets[i];
+    for (let i = 0; i < bullets.length; i++) {
+        let bullet = bullets[i];
 
         ctx.beginPath();
-        ctx.arc(bullet.x, bullet.y, 5, 0, Math.PI * 2);
-        ctx.fillStyle = "red";
+        ctx.arc(bullet.x, bullet.y, bullet.raio, 0, Math.PI * 2);
+        ctx.fillStyle = bullet.cor;
         ctx.fill();
         ctx.closePath();
     }
 }
 
 // Função para atualizar o cronômetro
-function updateTimer(seconds) {
-    var timer = document.getElementById("timer");
-    timer.innerText = "Tempo de jogo: " + seconds + "s";
+let segundos = 0;
+let tempo = document.getElementById('cronometro');
+
+function contadorSegundos() {
+    segundos += 1;
+    tempo.innerText = "Tempo de jogo: " + segundos + "s";
 }
 
-// Função principal do jogo
-function gameLoop() {
-    updatePlayer();
-    updateBullets();
-    drawPlayer();
-    drawBullets();
+setInterval(contadorSegundos, 1000);
 
-    requestAnimationFrame(gameLoop);
-}
+setInterval(criarBala, 1000);
+setInterval(moveBala, 16); // Aproximadamente 60 quadros por segundo
+setInterval(desenharBala, 16); // Aproximadamente 60 quadros por segundo
 
-// Objeto para armazenar as teclas pressionadas
-var keys = {
-    w: false,
-    a: false,
-    s: false,
-    d: false
-};
-
-// Event listeners para detectar as teclas pressionadas
-window.addEventListener("keydown", function (event) {
-    switch (event.keyCode) {
-        case 87: // W
-            keys.w = true;
-            break;
-        case 65: // A
-            keys.a = true;
-            break;
-        case 83: // S
-            keys.s = true;
-            break;
-        case 68: // D
-            keys.d = true;
-            break;
-    }
-});
-
-window.addEventListener("keyup", function (event) {
-    switch (event.keyCode) {
-        case 87: // W
-            keys.w = false;
-            break;
-        case 65: // A
-            keys.a = false;
-            break;
-        case 83: // S
-            keys.s = false;
-            break;
-        case 68: // D
-            keys.d = false;
-            break;
-    }
-});
-
-// Variáveis para controlar o tempo de jogo
-var startTime = new Date().getTime();
-var currentTime = 0;
-var elapsedTime = 0;
-
-// Função para atualizar o tempo de jogo
-function updateGameTime() {
-    currentTime = new Date().getTime();
-    elapsedTime = Math.floor((currentTime - startTime) / 1000);
-    updateTimer(elapsedTime);
-}
-
-// Inicia o jogo
-window.addEventListener("load", function () {
-    setInterval(createBullet, 2000); // Cria uma nova bala a cada 2 segundos
-
-    setInterval(updateGameTime, 1000); // Atualiza o tempo de jogo a cada segundo
-
-    gameLoop();
-});
+desenharPlayer();

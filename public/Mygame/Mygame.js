@@ -129,7 +129,6 @@ function desenharBala() {
     ctx.fill()
     ctx.closePath();
     
-
 }
 
 // Função para atualizar o cronômetro
@@ -186,7 +185,7 @@ desenharPlayer();
 
 
 
-function parede(x,y,l,a,cor){-
+function parede(x,y,l,a,cor){
 
     ctx.fillStyle == cor
     ctx.fillRect(x, y, l, a);
