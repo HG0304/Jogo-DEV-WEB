@@ -12,6 +12,5 @@ app.listen(port, () => {
 
 // define project.html como a pagina principal do servidor
 app.get('/', (req, res) => {
-    res.redirect('gpt/gptgame.html');
+    res.redirect('mygame/mygame.html');
   });
-
