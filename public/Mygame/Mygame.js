@@ -120,21 +120,21 @@ function moveBala() {
 function desenharBala() {
     criarBala();
     moveBala();
-    
-    ctx.beginPath();
-    ctx.arc(bullet.x, bullet.y, 5, 0, Math.PI * 2);
-    ctx.fillStyle = bullet.cor;
-    ctx.fill()
-    ctx.closePath();
-    
 
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    for (var i = 0; i < bullets.length; i++) {
+        var bullet = bullets[i];
+
+        ctx.beginPath();
+        ctx.arc(bullet.x, bullet.y, bullet.raio, 0, Math.PI * 2);
+        ctx.fillStyle = bullet.cor;
+        ctx.fill();
+        ctx.closePath();
+    }
+
+    requestAnimationFrame(desenharBala);
 }
-
-
-
-
-
-
 
 // Função para atualizar o cronômetro
 var segundos = 0;
@@ -146,63 +146,8 @@ function contadorSegundos() {
 }
 
 setInterval(contadorSegundos, 1000);
-
-setInterval(cronometro, 1000);
 setInterval(desenharBala, 1000)
 
 
 desenharPlayer();
-
 desenharBala();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function parede(x,y,l,a,cor){
-
-    ctx.fillStyle == cor
-    ctx.fillRect(x, y, l, a);
-    }
-
-
-parede()
-parede()
-()
-    
-    
