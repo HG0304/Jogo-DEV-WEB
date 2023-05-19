@@ -10,11 +10,10 @@ bullets = [];
 var player = {
     x: canvas.width/2,
     y: canvas.height/2,
-    altura: 25,
+    altura: 30,
     largura: 60,
     cor: '#5A5A5A',
     speed: 9,
-    score: 0
 }
 
 // captura as teclas do teclado apenas quando pressionadas
@@ -72,10 +71,10 @@ function criarBala() {
         x: x,
         y: y,
         raio: 10,
-        cor: "black",
+        cor: "red",
         speed: 15,
-        targetX: player.x - x, // Posição X do jogador
-        targetY: player.y - y // Posição Y do jogador
+        targetX: player.x - x + 15, // Posição X do jogador
+        targetY: player.y - y + 30 // Posição Y do jogador
     };
 
     var dx = player.x - x;
@@ -84,14 +83,12 @@ function criarBala() {
     bullet.targetX = (player.x - bullet.x) / distance * bullet.speed;
     bullet.targetY = (player.y - bullet.y) / distance * bullet.speed;
     
-
     // Adiciona a bala à lista das balas
     bullets.push(bullet);
 
 };
 
 // desenha e anima o jogador
-
 function desenharPlayer() {
     ctx.clearRect(0,0,canvas.width, canvas.height);
 
@@ -109,7 +106,7 @@ function moveBala() {
     for (var i = 0; i < bullets.length; i++) {
         var bullet = bullets[i];
 
-        if (bullet.x >= 0 && bullet.x <= c.width && bullet.y >= 0 && bullet.y <= c.height) { // se estiver dentro do canvas
+        if (bullet.x >= 0 && bullet.x <= c.width && bullet.y >= 0 && bullet.y <= c.height) { // dentro do canvas
             bullet.x += bullet.targetX;
             bullet.y += bullet.targetY;
           } else {
@@ -125,8 +122,6 @@ function desenharBala() {
     
     moveBala();
 
-    //ctx.clearRect(0, 0, canvas.width, canvas.height);
-
     for (var i = 0; i < bullets.length; i++) {
         var bullet = bullets[i];
 
@@ -136,7 +131,6 @@ function desenharBala() {
         ctx.fill();
         ctx.closePath();
     }
-
     requestAnimationFrame(desenharBala);
 }
 
