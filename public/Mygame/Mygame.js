@@ -152,12 +152,14 @@ function desenharBala() {
 
 // Função para atualizar o cronômetro
 var segundos = 0;
-function cronometro(segundos) {
-    var tempo = document.getElementById("cronometro");
-    segundos = parseInt(tempo);
+var tempo = document.getElementById('cronometro');
+
+function contadorSegundos() {
     segundos += 1;
-    tempo.innerText = "Tempo de jogo: " + segundos + "s";
+    tempo.innerText = "Tempo de jogo " + segundos + " s";
 }
+
+setInterval(contadorSegundos, 1000);
 
 setInterval(cronometro, 1000);
 setInterval(desenharBala, 1000)
