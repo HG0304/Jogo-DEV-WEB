@@ -115,7 +115,7 @@ function moveBala() {
         }
     }
 };
-
+// uhuuuuuu
 // cria a anima  as balas
 function desenharBala() {
     criarBala();
@@ -129,17 +129,6 @@ function desenharBala() {
     
 
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -163,6 +152,7 @@ setInterval(desenharBala, 1000)
 
 
 desenharPlayer();
+
 desenharBala();
 
 
