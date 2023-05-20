@@ -180,3 +180,5 @@ setInterval(criarBala, 500)
 
 desenharPlayer();
 desenharBala();
+
+//pronto
