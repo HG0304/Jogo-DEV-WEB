@@ -72,7 +72,7 @@ function criarBala() {
         y: y,
         raio: 10,
         cor: "red",
-        speed: 1,
+        speed: speed,
         targetX: 0,
         targetY: 0
     };
@@ -90,6 +90,17 @@ function criarBala() {
     bullets.push(bullet);
 
 };
+
+let speed = 5;                                      // velocidade da bala
+let tb = 1000;                                      // tempo de bala inicial 1000ms
+function dificuldade() {
+    // itera sobre a lista das balas
+    speed += 1;
+    if (tb > 0){
+        tb = 500;
+    }
+}
+setInterval(dificuldade, 7000);
 
 // desenha e anima o jogador
 function desenharPlayer() {
