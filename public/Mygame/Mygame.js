@@ -73,7 +73,7 @@ function criarBala() {
         y: y,
         raio: 10,
         cor: "red",
-        speed: 1,
+        speed: speed,
         targetX: 0,
         targetY: 0
     };
@@ -91,6 +91,17 @@ function criarBala() {
     bullets.push(bullet);
 
 };
+
+let speed = 5;                                      // velocidade da bala
+let tb = 1000;                                      // tempo de bala inicial 1000ms
+function dificuldade() {
+    // itera sobre a lista das balas
+    speed += 1;
+    if (tb > 0){
+        tb = 500;
+    }
+}
+setInterval(dificuldade, 7000);
 
 // desenha e anima o jogador
 function desenharPlayer() {
@@ -127,17 +138,9 @@ function moveBala() {
                 bullet.x + bullet.raio > player.x &&
                 bullet.y < player.y + player.altura &&
                 bullet.y + bullet.raio > player.y
-            ) {
-<<<<<<< HEAD
-                // Colisão detectada, encerrar o jogo
-                
+            ) {                
                 console.log("Game Over");
                 window.location.href = "gameover.html"
-                
-=======
-                
-
->>>>>>> e698a51913dd2907a9ea554af71a188fccc4a976
 
             }
           } else {
@@ -179,7 +182,6 @@ function contadorSegundos() {
 }
 setInterval(contadorSegundos, 1000);                                   // chama a função 1x por segundo
 
-
-setInterval(criarBala, 500)                                            // cria uma bala a cada 0,5 segundos
+setInterval(criarBala, tb)                                            // cria uma bala a cada 0,5 segundos
 desenharPlayer();
 desenharBala();
