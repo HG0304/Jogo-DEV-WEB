@@ -43,31 +43,30 @@ function movePlayer(){
         player.x += player.speed;
 };
 
-// função para criar balas nas extremidades aleatoriamente
+// Função para criar balas nas extremidades aleatoriamente
 function criarBala() {
-    // gera um número aleatório entre 0 e 3
+    // Gera um número aleatório entre 0 e 3
     var lado = Math.floor(Math.random() * 4);
 
-    // posição inicial gerada aleatoriamente em uma das extremidades
+    // Posição inicial nas extremidades
     var x;
     var y;
 
-    if (lado === 0) {                               // topo do mapa
-        // como o Math.random gera um numero entre 0 e 1, podemos usar-lo para multiplicar o lado do canvas e obter uma posiçao aleatoria
-        x = Math.random() * canvas.width;           
+    if (lado === 0) { // Topo do mapa
+        x = Math.random() * canvas.width;
         y = 0;
-    } else if (lado === 1) {                        // lateral direita do mapa
+    } else if (lado === 1) { // Lateral direita do mapa
         x = canvas.width;
         y = Math.random() * canvas.height;
-    } else if (lado === 2) {                        // base do mapa
+    } else if (lado === 2) { // Base do mapa
         x = Math.random() * canvas.width;
         y = canvas.height;
-    } else {                                        // lateral esquerda do mapa
+    } else { // Lateral esquerda do mapa
         x = 0;
         y = Math.random() * canvas.height;
     };
 
-    // obj balas ======> cada bala possui um posição inicial randomica em uma das extremidades
+    // obj balas ======> geraras randomicamente das extremidades e aumentar a vel com o tempo
     var bullet = {
         x: x,
         y: y,
@@ -94,92 +93,79 @@ function criarBala() {
 
 // desenha e anima o jogador
 function desenharPlayer() {
-    // limpa o canvas para não gerar um rastro de onde o jogador passou
     ctx.clearRect(0,0,canvas.width, canvas.height);
 
-    // esse função é chamada para que o player se mova a cada vez que é desenhado
     movePlayer();
     
-    // desenha o player de fato
     ctx.fillStyle = player.cor;
     ctx.fillRect(player.x, player.y, player.largura, player.altura);
     ctx.fill();
     
-    // loop de animação
     requestAnimationFrame(desenharPlayer);
 };
 
 // move as balas em direçao ao jogador
 function moveBala() {
-    // itera sobre a lista das balas
     for (var i = 0; i < bullets.length; i++) {
-        // para cada bala na lista
         var bullet = bullets[i];
 
         if (bullet.x >= 0 && bullet.x <= canvas.width && bullet.y >= 0 && bullet.y <= canvas.height) { // dentro do canvas
-            // incrementa no posição dela, gerando o efito de animação
             bullet.x += bullet.targetX;
             bullet.y += bullet.targetY;
 
-            // verifica a colisão com o jogador
+            // Verificar colisão com o jogador
             if (
                 bullet.x < player.x + player.largura &&
                 bullet.x + bullet.raio > player.x &&
                 bullet.y < player.y + player.altura &&
                 bullet.y + bullet.raio > player.y
             ) {
-<<<<<<< HEAD
                 // Colisão detectada, encerrar o jogo
                 
                 console.log("Game Over");
                 window.location.href = "gameover.html"
                 
-=======
-                
-
->>>>>>> e698a51913dd2907a9ea554af71a188fccc4a976
 
             }
           } else {
-            // remove a bala se estiver fora do canvas, caso contrario, muitas balas são geradas e programa fica extremamente lento e travado
+            // Remove a bala se estiver fora do canvas, caso contrario, muitas bolas sao geradas e programa fica extremamente lento e travado
             bullets.splice(i, 1);
             i--;
           }
     }
 };
 
-// desenha as balas
+// cria a anima  as balas
 function desenharBala() {
-    // esse função é chamada para que a bala se mova a cada vez que é desenhado
+    
     moveBala();
 
-    // itera sobre a lista das balas
     for (var i = 0; i < bullets.length; i++) {
-        // para cada bala na lista
         var bullet = bullets[i];
 
-        // desenha de fato a bala
         ctx.beginPath();
         ctx.arc(bullet.x, bullet.y, bullet.raio, 0, Math.PI * 2);
         ctx.fillStyle = bullet.cor;
         ctx.fill();
         ctx.closePath();
     }
-    // loop de animação
     requestAnimationFrame(desenharBala);
 }
 
-// função para atualizar o cronômetro
-var segundos = 0;                                                      // segundos = 0, inicialmente
-var tempo = document.getElementById('cronometro');                     // varialvel tempo é pega da id 'cronometro' do HTML
+// Função para atualizar o cronômetro
+var segundos = 0;
+var tempo = document.getElementById('cronometro');
 
 function contadorSegundos() {
-    segundos += 1;                                                     // incrementa 1 a cada vez que a função é chamada
-    tempo.innerText = "Tempo de jogo " + segundos + " s";              // insere os dados atualizados ao HTML
+    segundos += 1;
+    tempo.innerText = "Tempo de jogo " + segundos + " s";
 }
-setInterval(contadorSegundos, 1000);                                   // chama a função 1x por segundo
+
+setInterval(contadorSegundos, 1000);
 
 
-setInterval(criarBala, 500)                                            // cria uma bala a cada 0,5 segundos
+setInterval(criarBala, 500)
+
+
 desenharPlayer();
 desenharBala();
