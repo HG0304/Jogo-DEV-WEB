@@ -43,12 +43,12 @@ function movePlayer(){
         player.x += player.speed;
 };
 
-// Função para criar balas nas extremidades aleatoriamente
+// função para criar balas nas extremidades aleatoriamente
 function criarBala() {
-    // Gera um número aleatório entre 0 e 3
+    // gera um número aleatório entre 0 e 3
     var lado = Math.floor(Math.random() * 4);
 
-    // Posição inicial gerada aleatoriamente em uma das extremidades
+    // posição inicial gerada aleatoriamente em uma das extremidades
     var x;
     var y;
 
@@ -56,13 +56,13 @@ function criarBala() {
         // como o Math.random gera um numero entre 0 e 1, podemos usar-lo para multiplicar o lado do canvas e obter uma posiçao aleatoria
         x = Math.random() * canvas.width;           
         y = 0;
-    } else if (lado === 1) {                        // Lateral direita do mapa
+    } else if (lado === 1) {                        // lateral direita do mapa
         x = canvas.width;
         y = Math.random() * canvas.height;
-    } else if (lado === 2) {                        // Base do mapa
+    } else if (lado === 2) {                        // base do mapa
         x = Math.random() * canvas.width;
         y = canvas.height;
-    } else {                                        // Lateral esquerda do mapa
+    } else {                                        // lateral esquerda do mapa
         x = 0;
         y = Math.random() * canvas.height;
     };
