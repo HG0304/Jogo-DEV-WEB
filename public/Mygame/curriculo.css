@@ -1,0 +1,21 @@
+
+    body {
+      background-color: #808080;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px;
+    }
+    
+    .info {
+      width: 45%;
+      padding: 20px;
+      background-color: #808080;
+      color: #ffffff;
+    }
+    
+    .info img {
+      max-width: 100%;
+      height: auto;
+    }
