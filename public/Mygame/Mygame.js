@@ -67,7 +67,7 @@ function criarBala() {
         y = Math.random() * canvas.height;
     };
 
-    // obj balas ======> geradas randomicamente das extremidades
+    // obj balas ======> cada bala possui um posição inicial randomica em uma das extremidades
     var bullet = {
         x: x,
         y: y,
