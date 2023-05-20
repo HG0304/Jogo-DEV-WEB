@@ -10,8 +10,10 @@ canvas{
     margin-right: auto;
     display: block;
 }
-
 #cronometro{
     color: white;
+    font-size: 50px;
     display: inline;
+    margin-left: 14%;
+    width: 100%;
 }
