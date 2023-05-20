@@ -48,3 +48,16 @@ button:hover{
   color: white;
   border: 1px solid white;
 }
+#menu{
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: row;
+  
+}
+a{
+
+  text-decoration: none;
+  color: white;
+  font-size: 20px;
+  text-transform: uppercase; 
+}
