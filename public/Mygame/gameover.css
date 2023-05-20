@@ -48,3 +48,17 @@ body {
 button:hover{
   color: white;
 }
+
+#menu{
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: row;
+  
+}
+a{
+
+  text-decoration: none;
+  color: black;
+  font-size: 20px;
+  text-transform: uppercase; 
+}
