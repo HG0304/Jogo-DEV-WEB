@@ -72,7 +72,7 @@ function criarBala() {
         y: y,
         raio: 10,
         cor: "red",
-        speed: 15,
+        speed: 1,
         targetX: 0,
         targetY: 0
     };
@@ -121,7 +121,10 @@ function moveBala() {
                 bullet.y + bullet.raio > player.y
             ) {
                 // Colisão detectada, encerrar o jogo
+                
                 console.log("Game Over");
+                window.location.href = "gameover.html"
+                
 
             }
           } else {
