@@ -52,7 +52,7 @@ function criarBala() {
     var x;
     var y;
 
-    if (lado === 0) {                               // Topo do mapa
+    if (lado === 0) {                               // topo do mapa
         // como o Math.random gera um numero entre 0 e 1, podemos usar-lo para multiplicar o lado do canvas e obter uma posiçao aleatoria
         x = Math.random() * canvas.width;           
         y = 0;
