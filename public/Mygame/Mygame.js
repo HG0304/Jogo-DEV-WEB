@@ -5,7 +5,7 @@ let ctx = canvas.getContext("2d");
 // armazena as teclas pressionadas
 teclas = {};
 
-// armazena as balas
+// armazena todas as balas
 bullets = [];
 
 // definicoes do player como objeto
@@ -30,7 +30,7 @@ document.addEventListener("keyup", function (evento){
 // funcao para mover o jogador
 function movePlayer(){
     //w - 87 => sobe
-    if(87 in teclas && player.y > 0)
+    if(87 in teclas && player.y > 0)                                // cada condição de movimento para manter o jogador dentro da tela
         player.y -= player.speed;
     //s - 83 => desce
     if(83 in teclas && player.y < canvas.height - player.altura)
@@ -43,36 +43,35 @@ function movePlayer(){
         player.x += player.speed;
 };
 
-// Função para criar balas nas extremidades aleatoriamente
-function criarBala() {
-    // Gera um número aleatório entre 0 e 3
+function criarBala() {                                              // Função para criar balas nas extremidades aleatoriamente
+    // Gera um número aleatório entre 0 e 3 que definirá de qual lado a bala será disparada
     var lado = Math.floor(Math.random() * 4);
 
     // Posição inicial nas extremidades
     var x;
     var y;
 
-    if (lado === 0) { // Topo do mapa
+    if (lado === 0) {                                               // topo do mapa
         x = Math.random() * canvas.width;
         y = 0;
-    } else if (lado === 1) { // Lateral direita do mapa
+    } else if (lado === 1) {                                        // lateral direita do mapa
         x = canvas.width;
         y = Math.random() * canvas.height;
-    } else if (lado === 2) { // Base do mapa
+    } else if (lado === 2) {                                        // base do mapa
         x = Math.random() * canvas.width;
         y = canvas.height;
-    } else { // Lateral esquerda do mapa
+    } else {                                                        // lateral esquerda do mapa
         x = 0;
         y = Math.random() * canvas.height;
     };
 
-    // obj balas ======> geraras randomicamente das extremidades e aumentar a vel com o tempo
+    // obj balas ======> geraras com coordenadas iniciais aleatorias das extremidades do mapa
     var bullet = {
         x: x,
         y: y,
         raio: 10,
         cor: "red",
-        speed: speed,
+        speed: speed,                                              // variavel que incrementa com o tempo
         targetX: 0,
         targetY: 0
     };
@@ -82,25 +81,20 @@ function criarBala() {
     var dy = player.y - y;
     var distance = Math.sqrt(dx * dx + dy * dy);
 
-    // para que a bola tenha a mesmo velocidade, intependente do angulo que houver entre a bola e o player
+    // para que a bola tenha a mesmo velocidade independente do angulo que houver entre a bola e o player
     bullet.targetX = (player.x - bullet.x) / distance * bullet.speed;
     bullet.targetY = (player.y - bullet.y) / distance * bullet.speed;
     
-    // Adiciona a bala à lista das balas
+    // adiciona a bala à lista das balas
     bullets.push(bullet);
 
 };
 
 let speed = 5;                                      // velocidade da bala
-let tb = 1000;                                      // tempo de bala inicial 1000ms
 function dificuldade() {
-    // itera sobre a lista das balas
-    speed += 1;
-    if (tb > 0){
-        tb = 500;
-    }
+    speed += 1;                                     // aumente a velociade da bola
 }
-setInterval(dificuldade, 7000);
+setInterval(dificuldade, 7000);                     // função é chamada a cada 7 segundos
 
 // desenha e anima o jogador
 function desenharPlayer() {
@@ -124,19 +118,18 @@ function moveBala() {
             bullet.x += bullet.targetX;
             bullet.y += bullet.targetY;
 
-            // Verificar colisão com o jogador
+            // verificar colisão com o jogador
             if (
                 bullet.x < player.x + player.largura &&
                 bullet.x + bullet.raio > player.x &&
                 bullet.y < player.y + player.altura &&
                 bullet.y + bullet.raio > player.y
             ) {
-                // Colisão detectada, encerrar o jogo
+                // colisão detectada, encerrar o jogo
                 
                 console.log("Game Over");
-                window.location.href = "gameover.html"
+                window.location.href = "gameover.html?variavel=" + segundos;
                 
-
             }
           } else {
             // Remove a bala se estiver fora do canvas, caso contrario, muitas bolas sao geradas e programa fica extremamente lento e travado
@@ -163,7 +156,7 @@ function desenharBala() {
     requestAnimationFrame(desenharBala);
 }
 
-// Função para atualizar o cronômetro
+// função para atualizar o cronômetro
 var segundos = 0;
 var tempo = document.getElementById('cronometro');
 
@@ -173,12 +166,6 @@ function contadorSegundos() {
 }
 
 setInterval(contadorSegundos, 1000);
-
-
 setInterval(criarBala, 500)
-
-
 desenharPlayer();
 desenharBala();
-
-//pronto
