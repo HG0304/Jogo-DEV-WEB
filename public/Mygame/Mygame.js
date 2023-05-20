@@ -76,12 +76,12 @@ function criarBala() {                                              // Função 
         targetY: 0
     };
 
-    // calculo da distancia da bola ate o player
+    // calculo da distancia da bola ate o player atraves do teorema de pitagoras
     var dx = player.x - x;
     var dy = player.y - y;
     var distance = Math.sqrt(dx * dx + dy * dy);
 
-    // para que a bola tenha a mesmo velocidade independente do angulo que houver entre a bola e o player
+    // para que a bola tenha a mesma velocidade independente do angulo que houver entre a bola e o player
     bullet.targetX = (player.x - bullet.x) / distance * bullet.speed;
     bullet.targetY = (player.y - bullet.y) / distance * bullet.speed;
     
@@ -90,35 +90,42 @@ function criarBala() {                                              // Função 
 
 };
 
-let speed = 5;                                      // velocidade da bala
+// função para o incremento na dificuldade
+let speed = 5;                                      // velocidade inicial da bala
 function dificuldade() {
-    speed += 1;                                     // aumente a velociade da bola
+    speed += 1;                                     // aumenta a velociade da bola
 }
 setInterval(dificuldade, 7000);                     // função é chamada a cada 7 segundos
 
 // desenha e anima o jogador
 function desenharPlayer() {
+    // limpa o canvas evitando que se crie um rastro de onde o jogador passou
     ctx.clearRect(0,0,canvas.width, canvas.height);
 
+    // chama a função para animar o jogador
     movePlayer();
     
+    // desenha o jogador de fato
     ctx.fillStyle = player.cor;
     ctx.fillRect(player.x, player.y, player.largura, player.altura);
     ctx.fill();
     
+    // loop de animação
     requestAnimationFrame(desenharPlayer);
 };
 
 // move as balas em direçao ao jogador
 function moveBala() {
+    // itera sobre a lista das balas
     for (var i = 0; i < bullets.length; i++) {
-        var bullet = bullets[i];
+        var bullet = bullets[i];                                                                        // para da bala
 
-        if (bullet.x >= 0 && bullet.x <= canvas.width && bullet.y >= 0 && bullet.y <= canvas.height) { // dentro do canvas
-            bullet.x += bullet.targetX;
+        if (bullet.x >= 0 && bullet.x <= canvas.width && bullet.y >= 0 && bullet.y <= canvas.height) {  // dentro do canvas
+            // incrementa a direção especifica em que o jogador estava no memento da sua criação
+            bullet.x += bullet.targetX;                                                                 
             bullet.y += bullet.targetY;
 
-            // verificar colisão com o jogador
+            // verifica a colisão com o jogador
             if (
                 bullet.x < player.x + player.largura &&
                 bullet.x + bullet.raio > player.x &&
@@ -126,13 +133,12 @@ function moveBala() {
                 bullet.y + bullet.raio > player.y
             ) {
                 // colisão detectada, encerrar o jogo
-                
                 console.log("Game Over");
-                window.location.href = "gameover.html?variavel=" + segundos;
+                window.location.href = "gameover.html?variavel=" + segundos;                            // redireciona para o menu de gameover e manda o valor do tempo junto
                 
             }
           } else {
-            // Remove a bala se estiver fora do canvas, caso contrario, muitas bolas sao geradas e programa fica extremamente lento e travado
+            // remove a bala se estiver fora do canvas, caso contrario, muitas bolas sao geradas e programa fica extremamente lento e travado
             bullets.splice(i, 1);
             i--;
           }
@@ -141,18 +147,19 @@ function moveBala() {
 
 // cria a anima  as balas
 function desenharBala() {
-    
+    // anima as balas
     moveBala();
-
+    // itera sobre a lista das balas 
     for (var i = 0; i < bullets.length; i++) {
-        var bullet = bullets[i];
+        var bullet = bullets[i];                                        // para cada bala
 
-        ctx.beginPath();
+        ctx.beginPath();                                                // desenha a bala
         ctx.arc(bullet.x, bullet.y, bullet.raio, 0, Math.PI * 2);
         ctx.fillStyle = bullet.cor;
         ctx.fill();
         ctx.closePath();
     }
+    // loop de animação
     requestAnimationFrame(desenharBala);
 }
 
@@ -162,10 +169,10 @@ var tempo = document.getElementById('cronometro');
 
 function contadorSegundos() {
     segundos += 1;
-    tempo.innerText = "Tempo de jogo " + segundos + " s";
+    tempo.innerText = "Tempo de jogo " + segundos + " s";            // escreve o tempo de jogo na tela
 }
+setInterval(contadorSegundos, 1000);                                 // repetição a cada segundo
 
-setInterval(contadorSegundos, 1000);
-setInterval(criarBala, 500)
+setInterval(criarBala, 500)                                          // cria uma bola a cada 0,5 segundas
 desenharPlayer();
 desenharBala();
