@@ -1,34 +1,30 @@
 
     body {
-      background-color: #808080;
-      color: #ffffff;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 20px;
+      background-color: #f2f2f2;
     }
+
+    #menu {
+      background-color: #999999;
+      padding: 10px;
+    }
+
+    #menu a {
+      color: white;
+      margin-right: 10px;
+    }
+
     
-    .info {
-      width: 45%;
-      padding: 20px;
-      background-color: #808080;
-      color: #ffffff;
+
+     h2 {
+      text-align: right;
     }
-    
-    img {
-      width: 100px;
-      height: 300 px;
+
+     p {
+      text-align: right;
     }
-    #menu{
-      display: flex;
-      justify-content: space-evenly;
-      flex-direction: row;
-      
+
+    .imga {
+      width: 150px;
+      height: auto;
     }
-    a{
-    
-      text-decoration: none;
-      color: black;
-      font-size: 20px;
-      text-transform: uppercase; 
-    }
+  
