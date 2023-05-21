@@ -24,7 +24,7 @@ body {
 .game {
   width: 40%;
   padding: 10px;
-  font-size: 16px;
+  font-size: 20px;
   color: white;
   text-align: center;
   background-color: #4e87c9;
@@ -37,13 +37,13 @@ body {
   margin: auto;
   background-color: #4e87c9;
   color: #e6e1e1;
-  font-size: 16px;
+  font-size: 20px;
 }
 h2{
   text-align: center;
   margin-bottom: 5px;
   color: white;
-  font-size: 20px;
+  font-size: 36px;
 }
 
 .p {
