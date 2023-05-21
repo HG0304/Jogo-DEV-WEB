@@ -3,11 +3,14 @@ body {
   flex-direction: column; 
   background-color: #4e87c9;
   margin: 0;
+  font-size: 20px;
+  
 }
 
 #menu {
   background-color: #e6e1e1;
   padding: 10px;
+  text-align: center;
 }
 
 
@@ -31,13 +34,14 @@ body {
   
   text-align: center;
   margin-top: 10px;
+  
 }
 
 
 .h2{
   text-align: center;
-  color: white;
   margin-bottom: 5px;
+  color: white;
 }
 .p {
   text-align: center;
