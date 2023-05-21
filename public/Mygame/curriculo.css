@@ -1,12 +1,12 @@
 body {
   display: flex;
-  flex-direction: column; /* Arrange elements vertically */
-  background-color: #555555;
+  flex-direction: column; 
+  background-color: #4e87c9;
   margin: 0;
 }
 
 #menu {
-  background-color: #999999;
+  background-color: #e6e1e1;
   padding: 10px;
 }
 
@@ -14,7 +14,7 @@ body {
 
 .cont {
   display: flex; 
-  justify-content: space-between; 
+  justify-content: center;
   margin-top: 10px;
 }
 
@@ -23,6 +23,8 @@ body {
   padding: 10px;
   font-size: 16px;
   color: white;
+  text-align: center;
+  ;
 }
 
 .in {
