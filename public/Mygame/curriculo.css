@@ -1,30 +1,49 @@
+body {
+  display: flex;
+  flex-direction: column; /* Arrange elements vertically */
+  background-color: #555555;
+  margin: 0;
+}
 
-    body {
-      background-color: #f2f2f2;
-    }
+#menu {
+  background-color: #999999;
+  padding: 10px;
+}
 
-    #menu {
-      background-color: #999999;
-      padding: 10px;
-    }
 
-    #menu a {
-      color: white;
-      margin-right: 10px;
-    }
 
-    
+.cont {
+  display: flex; 
+  justify-content: space-between; 
+  margin-top: 10px;
+}
 
-     h2 {
-      text-align: right;
-    }
-
-     p {
-      text-align: right;
-    }
-
-    .imga {
-      width: 150px;
-      height: auto;
-    }
+.game {
   
+  padding: 10px;
+  font-size: 16px;
+  color: white;
+}
+
+.in {
+  
+  text-align: center;
+  margin-top: 10px;
+}
+
+
+.h2{
+  text-align: center;
+  color: white;
+  margin-bottom: 5px;
+}
+.p {
+  text-align: center;
+  color: white;
+  margin-bottom: 5px;
+}
+
+.imga {
+  width: 200px;
+  height: auto;
+}
